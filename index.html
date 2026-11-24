@@ -419,6 +419,13 @@ body.locked .edbtn,body.locked #todoEdit,body.locked #todoAuto,body.locked #diar
 .tnum{font-family:var(--hand);font-weight:700;font-size:calc(6.6rem * var(--hk));line-height:.82;font-variant-numeric:tabular-nums;letter-spacing:-2px}
 .tnum.hurry{color:var(--pen);animation:hurry 1s ease-in-out infinite}
 .tnum.paused{opacity:.45}
+/* 숫자 칸 고정: 1과 0처럼 폭이 다른 숫자가 바뀌어도 시계·타이머 상자가 움직이지 않아요 */
+i.dg{font-style:normal;display:inline-block;width:.58em;text-align:center}
+i.dc{font-style:normal;display:inline-block;text-align:center}
+.tnum i.dc,.clock i.dc{width:.3em}
+.tnum{white-space:nowrap}
+.tbar{flex:none}
+#tPause{min-width:5.4em}
 @keyframes hurry{50%{transform:scale(1.04)}}
 .tbar{width:100%;min-width:16rem;height:.7rem;border:2px solid var(--ink);border-radius:8px 10px 7px 11px;overflow:hidden;background:#fff}
 .tbar i{display:block;height:100%;background:var(--pen);width:100%;transition:width .25s linear}
@@ -1005,6 +1012,7 @@ body.classmode .cmbanner .voice .vlabel{font-size:calc(1.45rem * var(--hk))!impo
         <div class="hcard"><b>아이들이 만질 땐 잠그기</b><p>"선생님" → "잠그기". 박스를 눌러도 고치는 창이 안 떠요. 풀 때는 "잠김"을 2초 꾹 눌러요.</p></div>
         <div class="hcard"><b>아이들이 직접 누르는 것</b><p>지금 할 일 체크, 칭찬 도장, 목소리 신호등, 오늘 체크(제출·기분)는 잠가도 그대로 쓸 수 있어요.</p></div>
         <div class="hcard"><b>박스가 너무 많으면</b><p>"선생님" → "설정" → 화면 구성에서 안 쓰는 박스를 숨겨요. 남은 박스 글씨가 커져요.</p></div>
+        <div class="hcard"><b>컴퓨터 켜면 저절로 열기</b><p>크롬 앱으로 설치한 뒤, 크롬 주소창에 <code>chrome://apps</code>를 치고 게시판 아이콘을 오른쪽 클릭 → "로그인할 때 앱 시작"을 체크해요. 끄려면 체크를 풀면 돼요.</p></div>
         <div class="hcard"><b>수업 모드</b><p>수업 중에는 "수업 모드"를 눌러요. 지금 몇 교시인지, 언제부터 언제까지인지, 지금 해야 할 것이 크게 남아요. 위쪽에는 지금 시각, 타이머, 발표자 뽑기 버튼이 그대로 있고, 목소리 신호등은 시간표 띠 옆에 크게 붙어요. 수업 시간이 되면 저절로 켜지게 할 수도 있어요.</p></div>
         <div class="hcard"><b>지난 기록</b><p>"선생님" → "지난 기록"에서 한 주씩 넘기며 그 주 시간표·알림장·급식을 볼 수 있어요. 아이들 기분 기록도 여기 있어요.</p></div>
         <div class="hcard"><b>알람 · 학생 기록</b><p>"선생님" → "알람"에서 우유, 양치처럼 매일 같은 시각에 알려 줄 일을 정해요. "학생 기록"에는 학생별 관찰 메모를 남겨요(선생님만 보여요).</p></div>
@@ -1553,6 +1561,9 @@ document.querySelector(".lights").onclick=e=>{const b=e.target.closest("button")
 
 /* ---------- 타이머 ---------- */
 let tm={on:false,total:0,endAt:0,left:0,paused:false,label:""}, tmInt=null;
+// 숫자 한 글자마다 같은 폭의 칸에 넣어서, 숫자가 바뀌어도 상자 크기가 흔들리지 않게 해요
+function digits(el,str){ if(el.dataset.v===str) return; el.dataset.v=str;
+  el.innerHTML=[...str].map(c=>/[0-9]/.test(c)?'<i class="dg">'+c+'</i>':'<i class="dc">'+(c===" "?"&nbsp;":esc(c))+'</i>').join(""); }
 function fmt(sec){sec=Math.max(0,Math.ceil(sec));const m=Math.floor(sec/60),x=sec%60;return pad(m)+":"+pad(x)}
 function beepEnd(){try{if(!ensureAC())return;const t=ac.currentTime;[0,.35,.7,1.3,1.65,2].forEach((d,i)=>tone(i%3===2?1175:988,t+d,.28,"square",.12));}catch(e){}}
 function startTimer(sec,label){
@@ -1567,10 +1578,10 @@ function startTimer(sec,label){
 function drawTimer(){
   if(!tm.on) return;
   const left=tm.paused?tm.left:(tm.endAt-Date.now())/1000;
-  const n=document.getElementById("tNum"); n.textContent=fmt(left);
+  const n=document.getElementById("tNum"); digits(n,fmt(left));
   n.className="tnum"+(tm.paused?" paused":(left<=10?" hurry":""));
   document.getElementById("tBar").style.width=Math.max(0,Math.min(100,left/tm.total*100))+"%";
-  const now=new Date(); document.getElementById("tNow").textContent="지금 "+pad(now.getHours())+":"+pad(now.getMinutes())+":"+pad(now.getSeconds());
+  const now=new Date(); digits(document.getElementById("tNow"),"지금 "+pad(now.getHours())+":"+pad(now.getMinutes())+":"+pad(now.getSeconds()));
   if(!tm.paused&&left<=0){
     const lab=tm.label; stopTimer();
     document.getElementById("tuH").textContent="시간 끝!";
@@ -2057,8 +2068,8 @@ document.getElementById("testBye").onclick=()=>{closeModal(false);byeAlert();};
 
 function tick(){
   const now=new Date();
-  document.getElementById("hm").textContent=pad(now.getHours())+":"+pad(now.getMinutes());
-  document.getElementById("ss").textContent=":"+pad(now.getSeconds());
+  digits(document.getElementById("hm"),pad(now.getHours())+":"+pad(now.getMinutes()));
+  digits(document.getElementById("ss"),":"+pad(now.getSeconds()));
   if(now.getHours()===0&&now.getMinutes()===0&&now.getSeconds()<2) render();
   renderSchedule(now);
   if(typeof cmTick==="function") cmTick(now);
