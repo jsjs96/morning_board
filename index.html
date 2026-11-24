@@ -214,13 +214,22 @@ body.locked #undoBtn{display:none!important}
 .tool.big.cm[aria-pressed=true]{background:var(--ink);color:#fff}
 .cmbanner{display:none}
 body.classmode main{grid-template-columns:1fr!important}
-body.classmode main > .col.c1, body.classmode main > .col.c3, body.classmode .affirm, body.classmode .pair, body.classmode .safety{display:none!important}
+body.classmode main > .col.c1, body.classmode main > .col.c3, body.classmode .affirm, body.classmode .pair, body.classmode .meal, body.classmode .safety{display:none!important}
+/* 수업 모드에서는 머리도 비워요: 끄는 버튼과 (켜져 있으면) 타이머만 */
+body.classmode header .date, body.classmode header .voice, body.classmode .clock, body.classmode .tools > .tool:not(#cmBtn), body.classmode .tmenu-wrap{display:none!important}
+body.classmode .wrap{grid-template-rows:auto minmax(0,1fr)}
+body.classmode header{min-height:0;display:flex;align-items:center;gap:1rem}
+body.classmode header .center{flex:1}
+body.classmode header .tools{flex:none}
 body.classmode main > .col.c2{display:flex!important}
-body.classmode .cmbanner{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.2rem;font-family:var(--hand);background:var(--ink);color:#fff;border-radius:14px 10px 16px 12px;padding:.6rem 1.4rem;box-shadow:3px 4px 0 rgba(0,0,0,.15)}
-.cmbanner .c1{font-weight:700;font-size:calc(2.4rem * var(--hk));line-height:1.1}
-.cmbanner .c2{font-size:calc(1.5rem * var(--hk));opacity:.85}
-.cmbanner .c3{font-size:calc(1.5rem * var(--hk));margin-left:auto;background:var(--yellow);color:var(--ink);border-radius:10px 12px 9px 13px;padding:0 .7rem;font-weight:700}
-.cmbanner .c4{flex-basis:100%;font-size:calc(1.45rem * var(--hk))}
+body.classmode .cmbanner{display:flex;flex-direction:column;gap:.3rem;font-family:var(--hand);background:var(--ink);color:#fff;border-radius:16px 12px 18px 13px;padding:.8rem 1.6rem .7rem;box-shadow:3px 4px 0 rgba(0,0,0,.15);position:relative}
+.cm-now{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem 1.6rem}
+.cm-t{font-weight:700;font-size:calc(3.2rem * var(--hk));line-height:1.05}
+.cm-r{font-weight:700;font-size:calc(3.2rem * var(--hk));line-height:1.05;color:var(--yellow);font-variant-numeric:tabular-nums}
+.cm-l{margin-left:auto;font-weight:700;font-size:calc(1.7rem * var(--hk));background:var(--yellow);color:var(--ink);border-radius:10px 12px 9px 13px;padding:0 .8rem}
+.cm-s{font-size:calc(1.6rem * var(--hk));opacity:.9}
+.cm-auto{align-self:flex-end;font-family:var(--body);font-size:.85rem;opacity:.6;display:inline-flex;gap:.35rem;align-items:center;cursor:pointer;margin-top:-.1rem}
+.cm-auto input{width:1rem;height:1rem}
 body.classmode .todo-card{min-height:0}
 body.classmode .todo button{font-size:calc(3rem * var(--hk));grid-template-columns:3rem 1fr;gap:.9rem}
 body.classmode .todo .ck{width:2.5rem;height:2.5rem}
@@ -953,7 +962,7 @@ body.locked .edbtn,body.locked #todoEdit,body.locked #todoAuto,body.locked #diar
         <div class="hcard"><b>아이들이 만질 땐 잠그기</b><p>"선생님" → "잠그기". 박스를 눌러도 고치는 창이 안 떠요. 풀 때는 "잠김"을 2초 꾹 눌러요.</p></div>
         <div class="hcard"><b>아이들이 직접 누르는 것</b><p>지금 할 일 체크, 칭찬 도장, 목소리 신호등, 오늘 체크(제출·기분)는 잠가도 그대로 쓸 수 있어요.</p></div>
         <div class="hcard"><b>박스가 너무 많으면</b><p>"선생님" → "설정" → 화면 구성에서 안 쓰는 박스를 숨겨요. 남은 박스 글씨가 커져요.</p></div>
-        <div class="hcard"><b>수업 모드</b><p>수업 중에는 "수업 모드"를 눌러요. 시계, 지금 할 일, 신호등만 크게 남아요. 수업 시간이 되면 저절로 켜지게 할 수도 있어요.</p></div>
+        <div class="hcard"><b>수업 모드</b><p>수업 중에는 "수업 모드"를 눌러요. 지금 몇 교시인지, 언제부터 언제까지인지, 지금 해야 할 것만 크게 남아요. 타이머를 켜면 타이머도 같이 보여요. 수업 시간이 되면 저절로 켜지게 할 수도 있어요.</p></div>
         <div class="hcard"><b>지난 기록</b><p>"선생님" → "지난 기록"에서 한 주씩 넘기며 그 주 시간표·알림장·급식을 볼 수 있어요. 아이들 기분 기록도 여기 있어요.</p></div>
         <div class="hcard"><b>알람 · 학생 기록</b><p>"선생님" → "알람"에서 우유, 양치처럼 매일 같은 시각에 알려 줄 일을 정해요. "학생 기록"에는 학생별 관찰 메모를 남겨요(선생님만 보여요).</p></div>
         <div class="hcard"><b>주간학습안내 인쇄</b><p>"지난 기록" → 주간 보기 → "인쇄하기". 그 주 시간표·준비물·알림장을 A4 한 장으로 뽑아요(GitHub에 올린 게시판에서).</p></div>
@@ -2514,12 +2523,20 @@ function overflowing(){
   const sf=document.querySelector(".safety"); if(sf.scrollWidth>sf.clientWidth+2) return true;
   const hd=document.querySelector("header"); return hd.scrollWidth>hd.clientWidth+2;
 }
+// 한 화면에 들어가는 가장 큰 글씨 크기를 찾아요.
+// 범위를 반씩 좁혀 가며 찾고(다시 그리기 7~8번), 모드·화면 크기별로 찾은 값을 기억해서 다음에는 한두 번만 확인해요.
+const fitCache={};
 function fit(){
   const root=document.documentElement;
   if(innerWidth<=900){root.style.fontSize="16px";return}
-  let fs=Math.max(11,Math.min(innerHeight/36,innerWidth/66));
-  root.style.fontSize=fs+"px";
-  let n=0; while(overflowing()&&fs>8&&n<60){fs-=.4;root.style.fontSize=fs+"px";n++;}
+  const set=v=>{root.style.fontSize=v.toFixed(2)+"px"}, ok=v=>{set(v);return !overflowing()};
+  const hi0=Math.max(11,Math.min(innerHeight/36,innerWidth/66));
+  const key=(document.body.classList.contains("classmode")?"c":"n")+innerWidth+"x"+innerHeight, c=fitCache[key];
+  if(c&&c<hi0-.01){ if(ok(c)&&!ok(Math.min(hi0,c+.3))){set(c);return} }
+  if(ok(hi0)){fitCache[key]=hi0;return}
+  let lo=8, hi=hi0;
+  for(let i=0;i<10&&hi-lo>.15;i++){const mid=(lo+hi)/2; if(ok(mid)) lo=mid; else hi=mid;}
+  set(lo); fitCache[key]=lo;
 }
 function fitSoon(){clearTimeout(fitT);fitT=setTimeout(fit,60)}
 addEventListener("resize",()=>{applyLayout();fitSoon();});
@@ -2722,15 +2739,23 @@ function setClassMode(on,byAuto){
   document.body.classList.toggle("classmode",classMode);
   const b=document.getElementById("cmBtn"); b.setAttribute("aria-pressed",String(classMode)); b.querySelector("span").textContent=classMode?"수업 모드 끄기":"수업 모드";
   lastNowSig=""; renderNow(); cmBanner(new Date()); applyLayout();
+  clearTimeout(fitT); fit();   // 기다리지 않고 바로 맞춰요 (글씨가 한 번 튀지 않게)
 }
 function cmBanner(now){
   const el=document.getElementById("cmBanner"); if(!classMode){el.hidden=true;return}
   el.hidden=false; const sl=computeSlot(now), cur=now.getHours()*60+now.getMinutes();
-  let h="";
-  if(sl.type==="class"){const left=toMin(sl.cur.end)-cur;h='<span class="c1">'+esc(sl.cur.label)+" "+esc(sl.cur.subject)+'</span><span class="c2">'+esc(sl.cur.start)+"~"+esc(sl.cur.end)+'</span><span class="c3">'+(left>0?left+"분 남았어요":"곧 끝나요")+"</span>"+(sl.cur.note?'<span class="c4">'+esc(sl.cur.note)+"</span>":"");}
-  else if(sl.next){h='<span class="c1">'+esc(sl.label)+'</span><span class="c2">다음은 '+esc(sl.next.label)+" "+esc(sl.next.subject)+" ("+esc(sl.next.start)+')</span><span class="c3">'+Math.max(0,toMin(sl.next.start)-cur)+"분 뒤</span>";}
-  else h='<span class="c1">'+esc(sl.label)+"</span>";
-  h+='<label class="c2" style="margin-left:'+(sl.type==="class"||sl.next?"0":"auto")+';font-size:1.1rem;display:inline-flex;gap:.4rem;align-items:center;cursor:pointer"><input type="checkbox" id="cmAuto"'+(cmAuto?" checked":"")+' style="width:1.1rem;height:1.1rem"> 수업 시간에 저절로</label>';
+  const vd=viewDay(now), ps=periodsFor(vd.key,vd.date);
+  let title="", range="", left="", sub="";
+  if(sl.type==="class"){const m=toMin(sl.cur.end)-cur;
+    title=esc(sl.cur.label)+" "+esc(sl.cur.subject); range=esc(sl.cur.start)+" ~ "+esc(sl.cur.end);
+    left=m>0?m+"분 남았어요":"곧 끝나요"; sub=sl.cur.note?esc(sl.cur.note):"";}
+  else if(sl.next){const k=ps.findIndex(p=>p.i===sl.next.i), prev=k>0?ps[k-1]:null, m=Math.max(0,toMin(sl.next.start)-cur);
+    title=esc(sl.label); range=(prev?esc(prev.end):"")+" ~ "+esc(sl.next.start);
+    left=m+"분 뒤 수업"; sub="다음: "+esc(sl.next.label)+" "+esc(sl.next.subject)+" ("+esc(sl.next.start)+" ~ "+esc(sl.next.end)+")";}
+  else {title=esc(sl.label); range=sl.until?"~ "+esc(sl.until):"";}
+  let h='<div class="cm-now"><span class="cm-t">'+title+'</span><span class="cm-r">'+range+"</span>"+(left?'<span class="cm-l">'+left+"</span>":"")+"</div>"+
+    (sub?'<div class="cm-s">'+sub+"</div>":"")+
+    '<label class="cm-auto"><input type="checkbox" id="cmAuto"'+(cmAuto?" checked":"")+'> 수업 시간에 저절로</label>';
   if(el.dataset.h!==h){el.innerHTML=h;el.dataset.h=h;}
 }
 document.getElementById("cmBanner").addEventListener("change",e=>{if(e.target.id==="cmAuto"){cmAuto=e.target.checked;lset(CMA,cmAuto?"1":"0");toast(cmAuto?"수업이 시작되면 저절로 수업 모드가 켜져요.":"저절로 켜지기를 껐어요.");}});
