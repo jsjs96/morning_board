@@ -1,6 +1,6 @@
 // 우리 반 아침 게시판: 인터넷이 잠깐 끊겨도 화면이 열리게 해 주는 파일이에요.
 // 늘 새 버전을 먼저 받아 오고(네트워크 우선), 안 될 때만 저장해 둔 것을 보여 줘요.
-const CACHE = "morning-board-v11";
+const CACHE = "morning-board-v12";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {

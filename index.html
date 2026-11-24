@@ -76,6 +76,10 @@ body.locked .locked-btn{display:inline-flex}
 .tmenu button:hover,.tmenu button:focus-visible{background:var(--yellow)}
 .tmenu button svg{width:1.35em;height:1.35em;flex:none}
 .tmenu button span{flex:1}
+.instl{text-align:left;font-family:var(--body);font-size:15px;line-height:1.55;margin:.4rem 0 1rem;max-width:30rem}
+.popcard .instl p{margin:0 0 .7rem;font-family:var(--body);font-size:16px;line-height:1.55;font-weight:400}
+#popInstall .popcard h3{font-size:calc(2.2rem * var(--hk))}
+#popInstall .popcard{max-width:34rem}.instl b{font-family:var(--hand);font-size:calc(1.15rem * var(--hk))}
 .tmenu .sync{padding:.3rem .7rem 0;text-align:left;width:auto}
 kbd{font-family:var(--body);font-size:.72em;font-weight:700;border:1.5px solid #b9bfd2;border-bottom-width:3px;border-radius:5px;padding:0 .35em;background:#fff;color:var(--ink-soft)}
 .sndhint{position:fixed;left:16px;bottom:16px;z-index:65;display:flex;align-items:center;gap:8px;background:var(--pen);color:#fff;border:none;border-radius:14px 12px 15px 11px;padding:.5rem .9rem;font-family:var(--hand);font-weight:700;font-size:calc(1.15rem * var(--hk));box-shadow:3px 3px 0 var(--ink);animation:nudge 1.6s ease-in-out infinite}
@@ -734,6 +738,7 @@ body.classmode .cmbanner .voice .vlabel{font-size:calc(1.45rem * var(--hk))!impo
           <button type="button" role="menuitem" id="histBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 4v4h4"/><path d="M12 7.5V12l3 2"/></svg><span>지난 기록</span><kbd>H</kbd></button>
           <button type="button" role="menuitem" id="editBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></svg><span>설정</span></button>
           <button type="button" role="menuitem" id="lockItem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span>잠그기</span></button>
+          <button type="button" role="menuitem" id="installBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="12" rx="2"/><path d="M8.5 20h7M12 16v4M12 7v5.5M9.5 10l2.5 2.5 2.5-2.5"/></svg><span>앱으로 설치</span></button>
           <button type="button" role="menuitem" id="helpBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.8"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg><span>쓰는 법</span><kbd>?</kbd></button>
           <div class="sync" id="sync"></div>
         </div>
@@ -863,6 +868,18 @@ body.classmode .cmbanner .voice .vlabel{font-size:calc(1.45rem * var(--hk))!impo
       <span class="hint" id="nNote">선생님만 볼 수 있어요. 잠그면 메뉴와 함께 숨겨져요.</span>
       <div class="r"><button class="btn" type="button" id="nCopy">기록 복사</button><button class="btn" type="button" id="nCsv">엑셀용 파일 저장</button><button class="btn main" type="button" data-close="popNotes">닫기</button></div>
     </div>
+  </div>
+</div>
+<div class="pop" id="popInstall" role="dialog" aria-modal="true" aria-labelledby="piH">
+  <div class="note popcard">
+    <h3 id="piH">앱으로 설치하기</h3>
+    <div class="instl">
+      <p><b>컴퓨터 (크롬·엣지)</b><br>주소창 오른쪽 끝의 설치 아이콘(모니터 모양)을 누르거나, 메뉴(⋮) → "전송, 저장, 공유" → "페이지를 앱으로 설치"를 눌러요.</p>
+      <p><b>아이패드·아이폰 (사파리)</b><br>아래쪽 공유 버튼(네모에 화살표) → "홈 화면에 추가"를 눌러요.</p>
+      <p><b>안드로이드 (크롬)</b><br>메뉴(⋮) → "홈 화면에 추가" 또는 "앱 설치"를 눌러요.</p>
+      <p class="hint">설치하면 바탕화면·홈 화면에 아이콘이 생기고, 주소창 없이 앱처럼 열려요.</p>
+    </div>
+    <button class="tag" type="button" data-close="popInstall">알았어요</button>
   </div>
 </div>
 <div class="pop" id="popClass" role="dialog" aria-modal="true" aria-labelledby="pcH">
@@ -3053,6 +3070,19 @@ function maybeSetup(){
 }
 
 /* ---------- 앱처럼 설치 (GitHub Pages 등) ---------- */
+// ---------- 앱으로 설치 (홈 화면·바탕화면) ----------
+(function(){
+  const btn=document.getElementById("installBtn"); let ask=null;
+  const installed=()=>matchMedia("(display-mode: standalone)").matches||matchMedia("(display-mode: window-controls-overlay)").matches||navigator.standalone===true;
+  // 웹 주소로 열었고, 아직 앱으로 열린 게 아닐 때만 메뉴에 보여요
+  btn.hidden=IN_CLAUDE||!/^https?:$/.test(location.protocol)||installed();
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();ask=e;if(!installed())btn.hidden=false;});
+  addEventListener("appinstalled",()=>{ask=null;btn.hidden=true;toast("설치했어요! 바탕화면이나 홈 화면의 아이콘으로 열어요.");});
+  btn.addEventListener("click",async()=>{
+    if(ask){ ask.prompt(); try{const r=await ask.userChoice; if(r.outcome==="accepted")btn.hidden=true;}catch(_){} ask=null; return; }
+    openPop("popInstall");   // 브라우저가 바로 설치 창을 못 띄우면 방법을 보여 줘요
+  });
+})();
 if(!IN_CLAUDE&&"serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
   addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});
 }
